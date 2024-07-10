@@ -9,7 +9,7 @@ pipeline {
 
     stage('OWASP DependencyCheck') {
       steps {
-        dependencyCheck(additionalArguments: '--format HTML --format XML', odcInstallation: 'OWASP Dependency-Check Vulnerabilities')
+        dependencyCheck(additionalArguments: '--noupdate --nvdApiKey e38784dc-b37b-4d03-a011-ba432b095a74 --format XML --format HTML', odcInstallation: 'OWASP Dependency-Check Vulnerabilities')
       }
     }
 
@@ -21,7 +21,7 @@ pipeline {
 
       }
       steps {
-        sh 'composer install'
+      	sh 'composer install'
         sh 'mkdir -p logs'
         sh './vendor/bin/phpunit --log-junit logs/unitreport.xml -c tests/phpunit.xml tests'
       }
