@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('Checkout SCM') {
       steps {
-        git(url: 'https://github.com/muhdmarhakim/ICT2216_Group5.git', branch: 'main')
+        git(url: 'https://github.com/Cassandra-Fu/ICT2216_Group5.git', branch: 'main')
       }
     }
 
