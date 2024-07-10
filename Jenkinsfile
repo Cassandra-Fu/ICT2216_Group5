@@ -23,7 +23,7 @@ pipeline {
       steps {
       	sh 'composer install'
         sh 'mkdir -p logs'
-        sh './vendor/bin/phpunit --log-junit logs/unitreport.xml -c tests/phpunit.xml tests'
+        sh './vendor/bin/phpunit tests'
       }
     }
 
