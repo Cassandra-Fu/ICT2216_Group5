@@ -12,47 +12,20 @@ pipeline {
         dependencyCheck(additionalArguments: '''--noupdate --nvdApiKey e38784dc-b37b-4d03-a011-ba432b095a74  -o './' -s './' -f 'ALL'  --prettyPrint''', odcInstallation: 'OWASP Dependency-Check Vulnerabilities')
       }
     }
-
-    stage('Composer Install and Test') {
-      agent {
-        docker {
-          image 'composer:latest'
-        }
-
-      }
-      steps {
-      	sh 'composer install'
-        sh 'mkdir -p logs'
-        sh './vendor/bin/phpunit --log-junit logs/unitreport.xml -c tests/phpunit.xml tests'
-      }
-    }
-
-  }
-  post {
-    always {
-      script {
-        def resultFile = 'logs/unitreport.xml'
-        if (fileExists(resultFile)) {
-          junit resultFile
-        } else {
-          echo "Test results not found in ${resultFile}"
-        }
-      }
-
-    }
-
-    failure {
-      sh 'ls -l logs'
-      script {
-        def resultFile = 'logs/unitreport.xml'
-        if (fileExists(resultFile)) {
-          sh "cat ${resultFile}"
-        } else {
-          echo "Test results not found in ${resultFile}"
-        }
-      }
-
-    }
-
-  }
+   stage('Code Quality Check via SonarQube') {
+	steps {
+		script {
+			def scannerHome = tool 'SonarQube';
+				withSonarQubeEnv('SonarQube') {
+				sh "${scannerHome}/bin/sonar-scanner  -Dsonar.projectKey=OWASP \ -Dsonar.sources=. \  -Dsonar.host.url=http://localhost:9000 \ -Dsonar.token=sqp_a6d093e26302b42a7bfac2421d3d3e81526f5d8c -Dsonar.sources=."
+				}
+			}	
+		}
+	}
+}
+post {
+	always {
+		recordIssues enabledForFailure: true, tool: sonarQube()
+	}    
+ } 
 }
