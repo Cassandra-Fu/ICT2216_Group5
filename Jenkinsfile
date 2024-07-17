@@ -10,7 +10,7 @@ pipeline {
     stage('OWASP Dependency-Check Vulnerabilities') {
       steps {
         dependencyCheck additionalArguments: '--project WORKSPACE', odcInstallation: 'OWASP Dependency-Check Vulnerabilities'
-        dependencyCheckPublisher pattern: 'dependency-check-report.xml')
+        dependencyCheckPublisher pattern: 'dependency-check-report.xml'
       }
     }
   }
