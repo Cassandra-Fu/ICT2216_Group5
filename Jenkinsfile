@@ -16,10 +16,7 @@ pipeline {
     stage('Code Quality Check via SonarQube') {
 	steps {
 		script {
-			def scannerHome = tool 'SonarQube';
-			withSonarQubeEnv('SonarQube') {
-				sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=OWASP -Dsonar.sources=."
-			}
+			sh '/var/jenkins_home/sonar-scanner-6.1.0.4477-linux-x64/bin/sonar-scanner -Dsonar.projectKey=OWASP -Dsonar.sources=. -Dsonar.host.url=http://localhost:9000 -Dsonar.token=sqp_a6d093e26302b42a7bfac2421d3d3e81526f5d8c'
 		}
 	}
     }
