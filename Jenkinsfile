@@ -24,7 +24,7 @@ pipeline {
                             -Dsonar.projectKey=Deliverable3 \
                             -Dsonar.sources=. \
                             -Dsonar.host.url=http://localhost:9000 \
-                            -Dsonar.token=squ_95fe82edb6fc5305a14703b17a79e1d598e2953c
+                            -Dsonar.token=squ_95fe82edb6fc5305a14703b17a79e1d598e2953c"
                     }
                 }
             }
