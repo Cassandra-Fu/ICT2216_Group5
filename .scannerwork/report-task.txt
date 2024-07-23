@@ -1,0 +1,6 @@
+projectKey=OWASP
+serverUrl=http://localhost:9000
+serverVersion=10.6.0.92116
+dashboardUrl=http://localhost:9000/dashboard?id=OWASP
+ceTaskId=8aed96df-67d2-4d64-8d89-58493adaf77b
+ceTaskUrl=http://localhost:9000/api/ce/task?id=8aed96df-67d2-4d64-8d89-58493adaf77b

@@ -13,18 +13,21 @@ pipeline {
         dependencyCheckPublisher pattern: 'dependency-check-report.xml'
       }
     }
-    stage('Code Quality Check via SonarQube') {
-	steps {
-		script {
-			sh '/var/jenkins_home/sonar-scanner-6.1.0.4477-linux-x64/bin/sonar-scanner -Dsonar.projectKey=OWASP -Dsonar.sources=. -Dsonar.host.url=http://localhost:9000 -Dsonar.token=sqp_a6d093e26302b42a7bfac2421d3d3e81526f5d8c'
-		}
-	}
+    stage('Code Analysis') {
+    	environment {
+                scannerHome = tool 'Sonar'
+       	}
+       	steps {
+                script {
+                    withSonarQubeEnv('Sonar') {
+                        sh "${scannerHome}/bin/sonar-scanner \
+                            -Dsonar.projectKey=Deliverable3 \
+                            -Dsonar.sources=. \
+                            -Dsonar.host.url=http://localhost:9000 \
+                            -Dsonar.token=squ_95fe82edb6fc5305a14703b17a79e1d598e2953c
+                    }
+                }
+            }
     }
   }
-  post {
-	always {
-		recordIssues enabledForFailure: true, tool: sonarQube()
-	}
- }
 }
-
